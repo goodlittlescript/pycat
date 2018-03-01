@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+import os, sys
+sys.path.append(os.path.realpath(__file__ + '/../../lib'))
+
+import argparse
+import pycat
+
+parser = argparse.ArgumentParser(description='''
+  Concatenate and print files.
+''')
+args = parser.parse_args()
+
+print(pycat.message())
