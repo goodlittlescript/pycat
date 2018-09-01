@@ -1,1 +1,1 @@
-from .utils import message
+from .utils import copy_stream

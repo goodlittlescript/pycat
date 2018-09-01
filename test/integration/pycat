@@ -1,5 +1,23 @@
 #!/bin/bash
 
+test_pycat_reads_from_stdin_by_default () {
+printf "%s\n" abc | pycat | assert_output "\
+abc
+"
+}
+
+test_pycat_concatenates_files () {
+printf "%s\n" c | pycat <(printf "%s\n" a b) - | assert_output "\
+a
+b
+c
+"
+}
+
+#
+# -h
+#
+
 test_h_prints_help () {
 pycat -h | grep -q "usage: pycat"
 }
