@@ -1,7 +1,7 @@
 IMAGE_NAME=pycat
 
 #
-# Development
+# develop
 #
 
 images:
@@ -18,15 +18,23 @@ lint:
 	docker run --rm -v $(PWD):/project ${IMAGE_NAME} pipenv check --system
 
 #
-# Utilities
+# deploy
+#
+
+artifacts:
+	make images test lint >&2 && echo ${IMAGE_NAME}
+
+#
+# utilities
 #
 
 phony:
-	@sed -ne 's/^\([[:alnum:]]\{1,\}\):/	\1 \\/p' Makefile
+	@sed -ne 's/^\([[:alnum:]_-]\{1,\}\):.*/	\1 \\/p' Makefile | sed -e '$$s/ \\//'
 
 .PHONY: \
 	images \
 	shell \
 	test \
 	lint \
-	phony \
+	artifacts \
+	phony

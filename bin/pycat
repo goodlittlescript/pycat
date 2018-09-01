@@ -8,8 +8,8 @@ import pycat
 parser = argparse.ArgumentParser(description='''
   Concatenate and print files.
 ''')
-parser.add_argument('files', metavar='N', nargs='*',
-                    help='Pathname to input files.')
+parser.add_argument(
+    'files', metavar='N', nargs='*', help='Pathname to input files.')
 args = parser.parse_args()
 
 files = args.files
