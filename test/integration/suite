@@ -1,2 +1,2 @@
 #!/bin/bash
-ts test/integration/cat*
+ts test/integration/cat* "$@"

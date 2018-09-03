@@ -14,6 +14,10 @@ parser = argparse.ArgumentParser(description='''
 ''')
 parser.add_argument(
     'files', metavar='N', nargs='*', help='Pathname to input files.')
+parser.add_argument('-u', dest='buffering',action='store_const',
+                    const=0, default=-1,
+                    help='unbuffer output')
+
 args = parser.parse_args()
 
 files = args.files
@@ -22,6 +26,7 @@ files = args.files
 if len(files) == 0:
     files.append('-')
 
+output = os.fdopen(sys.stdout.fileno(), 'wb', args.buffering)
 
 for filename in files:
     # If a file is '-', the cat utility shall read from the standard input at
@@ -29,8 +34,8 @@ for filename in files:
     # standard input when it is referenced in this way, but shall accept
     # multiple occurrences of '-' as a file operand.
     if filename == '-':
-        pycat.copy_stream(sys.stdin.buffer, sys.stdout.buffer, 1)
+        pycat.copy_stream(sys.stdin.buffer, output, 1)
         continue
 
     with open(filename, 'rb') as f:
-        pycat.copy_stream(f, sys.stdout.buffer, 1)
+        pycat.copy_stream(f, output, 1)
