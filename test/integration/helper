@@ -1,2 +1,3 @@
 # Setup test paths
 export PATH="$PWD/bin:$PATH"
+export CAT="pycat"

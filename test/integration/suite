@@ -1,2 +1,2 @@
 #!/bin/bash
-ts test/integration/pycat*
+ts test/integration/cat*

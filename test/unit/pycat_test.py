@@ -4,13 +4,13 @@ sys.path.append(os.path.realpath(__file__ + '/../../../lib'))
 
 import unittest
 import pycat
-import StringIO
+import io
 
 
 class PycatTest(unittest.TestCase):
     def setUp(self):
-        self.i = StringIO.StringIO()
-        self.o = StringIO.StringIO()
+        self.i = io.StringIO()
+        self.o = io.StringIO()
 
     def tearDown(self):
         self.i.close()

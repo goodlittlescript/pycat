@@ -24,8 +24,8 @@ for filename in files:
     # standard input when it is referenced in this way, but shall accept
     # multiple occurrences of '-' as a file operand.
     if filename == '-':
-        pycat.copy_stream(sys.stdin, sys.stdout)
+        pycat.copy_stream(sys.stdin, sys.stdout, 1)
         continue
 
     with open(filename, 'rb') as f:
-        pycat.copy_stream(f, sys.stdout)
+        pycat.copy_stream(f, sys.stdout, 1)

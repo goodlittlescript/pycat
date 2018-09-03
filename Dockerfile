@@ -1,23 +1,30 @@
-FROM amazonlinux
+FROM python:3.7-alpine3.7 as base
 
-# Setup development
-RUN yum install -y vim groff && \
-    mkdir -p /project
-WORKDIR /project
-ENV PATH="/project/bin:$PATH"
+# Set working directory
+RUN mkdir -p /app
+WORKDIR /app
+ENV PATH="/app/bin:$PATH"
 
-# Install ts
-RUN yum install -y diffutils && \
+# Install pipenv
+RUN pip install pipenv
+
+# Install project dependencies
+COPY Pipfile Pipfile.lock /project/
+RUN pipenv install --dev
+
+#############################################################################
+FROM base as shell
+
+# Install development dependencies
+# * curl bash gawk expect for ts
+RUN apk add --no-cache curl bash gawk expect && \
     cd /usr/local/lib && \
     curl -OL https://github.com/thinkerbot/ts/archive/v2.0.1.tar.gz && \
     tar -xvzf v2.0.1.tar.gz && \
     ln -s /usr/local/lib/ts-2.0.1/bin/ts /usr/local/bin/ts && \
     rm v2.0.1.tar.gz
 
-# Install pipenv
-RUN yum install -y python27-pip && \
-    pip install pipenv
-
-# Install project dependencies
-COPY Pipfile Pipfile.lock /project/
-RUN pipenv install --system --dev
+#############################################################################
+FROM base as app
+COPY ./bin /app/bin
+COPY ./lib /app/lib
