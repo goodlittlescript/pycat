@@ -15,9 +15,13 @@ c
 "
 }
 
-test_epipe_exits_0 () {
-yes | $CAT >&-
-assert_status $? 0 "EPIPE did not exit 0"
+#
+# errors
+#
+
+test_epipe_exits_141 () {
+yes | $CAT | cat >&- 2>/dev/null
+assert_status "${PIPESTATUS[1]}" 141 "EPIPE did not exit 141"
 }
 
 test_interrupt_exits_130 () {

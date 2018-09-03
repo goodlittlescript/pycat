@@ -2,6 +2,10 @@
 import os, sys
 sys.path.append(os.path.realpath(__file__ + '/../../lib'))
 
+import signal
+signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+signal.signal(signal.SIGINT, signal.SIG_DFL)
+
 import argparse
 import pycat
 
@@ -17,6 +21,7 @@ files = args.files
 
 if len(files) == 0:
     files.append('-')
+
 
 for filename in files:
     # If a file is '-', the cat utility shall read from the standard input at
