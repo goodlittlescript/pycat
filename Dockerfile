@@ -9,8 +9,8 @@ ENV PATH="/app/bin:$PATH"
 RUN pip install pipenv
 
 # Install project dependencies
-COPY Pipfile Pipfile.lock /project/
-RUN pipenv install --dev
+COPY Pipfile Pipfile.lock /app/
+RUN pipenv install --system
 
 #############################################################################
 FROM base as shell
@@ -18,11 +18,9 @@ FROM base as shell
 # Install development dependencies
 # * curl bash gawk diffutils expect for ts
 RUN apk add --no-cache curl bash gawk diffutils expect && \
-    cd /usr/local/lib && \
-    curl -OL https://github.com/thinkerbot/ts/archive/v2.0.2.tar.gz && \
-    tar -xvzf v2.0.2.tar.gz && \
-    ln -s /usr/local/lib/ts-2.0.2/bin/ts /usr/local/bin/ts && \
-    rm v2.0.2.tar.gz
+    curl -o /usr/local/bin/ts -L https://raw.githubusercontent.com/thinkerbot/ts/v2.0.2/bin/ts && \
+    chmod +x /usr/local/bin/ts && \
+    pipenv install --dev --system
 
 #############################################################################
 FROM base as app

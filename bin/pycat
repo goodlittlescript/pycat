@@ -14,9 +14,13 @@ parser = argparse.ArgumentParser(description='''
 ''')
 parser.add_argument(
     'files', metavar='N', nargs='*', help='Pathname to input files.')
-parser.add_argument('-u', dest='buffering',action='store_const',
-                    const=0, default=-1,
-                    help='unbuffer output')
+parser.add_argument(
+    '-u',
+    dest='buffering',
+    action='store_const',
+    const=0,
+    default=-1,
+    help='unbuffer output')
 
 args = parser.parse_args()
 

@@ -17,8 +17,11 @@ test:
 	docker run --rm -v $(PWD):/app $(IMAGE_NAME):shell ./test/suite
 
 lint:
-	docker run --rm -v $(PWD):/project ${IMAGE_NAME} yapf -r -i -vv .
-	docker run --rm -v $(PWD):/project ${IMAGE_NAME} pipenv check --system
+	docker run --rm -v $(PWD):/app ${IMAGE_NAME}:shell yapf -r -d .
+	docker run --rm -v $(PWD):/app ${IMAGE_NAME}:shell pipenv check --system
+
+fix:
+	docker run --rm -v $(PWD):/app ${IMAGE_NAME}:shell yapf -r -vv -i .
 
 shell:
 	docker run -it --rm -v $(PWD):/app $(IMAGE_NAME):shell /bin/sh
@@ -42,6 +45,7 @@ phony:
 	run \
 	test \
 	lint \
+	fix \
 	shell \
 	artifacts \
 	phony
