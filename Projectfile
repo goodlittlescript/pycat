@@ -1,0 +1,53 @@
+#!/bin/bash
+# usage: ./Projectfile [command]
+
+#
+# develop
+#
+
+images () {
+  docker-compose build --parallel
+}
+
+up () {
+  docker-compose up --detach --no-build shell
+}
+
+shell () {
+  up && docker-compose exec shell /bin/bash -l
+}
+
+down () {
+  docker-compose stop
+}
+
+clean () {
+  docker-compose rm -s -f -v
+}
+
+#
+# helpers (in container only)
+#
+
+lint () {
+  yapf -r -d .
+}
+
+fix () {
+  yapf -r -vv -i .
+}
+
+#
+# utility  
+#
+
+list () {
+  compgen -A function
+}
+
+if list | grep -qFx -- "${1:-}"
+then "$@"; exit $?
+else
+  printf "unknown command: %s\n" "${1:-}" >&2
+  exit 1
+fi
