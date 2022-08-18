@@ -39,12 +39,16 @@ Clone repo, get a shell container.
 ./Projectfile shell
 ```
 
-Do development in the shell. Use the Projectfile for common tasks.
+Do development in the shell.
 
 ```shell
 # run the utility
 ./bin/pycat <<<"success"
+```
 
+Use the Projectfile for common tasks.
+
+```shell
 # test
 ./Projectfile test
 
