@@ -29,7 +29,7 @@ pycat file
 
 ## INSTALLATION
 
-Add `pycat` to your PATH (or execute it directly).
+Add `pycat` to your PATH (or execute it directly). There are no additional dependencies.
 
 ## DEVELOPMENT
 

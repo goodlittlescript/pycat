@@ -1,13 +1,11 @@
 #!/usr/bin/env python
-import os, sys
-sys.path.append(os.path.realpath(__file__ + '/../../lib'))
+import argparse
+import os
+import sys
 
 import signal
 signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 signal.signal(signal.SIGINT, signal.SIG_DFL)
-
-import argparse
-import pycat
 
 parser = argparse.ArgumentParser(description='''
   Concatenate and print files.
@@ -25,12 +23,20 @@ parser.add_argument(
 args = parser.parse_intermixed_args()
 
 files = args.files
-#############################################################################
-
 if len(files) == 0:
     files.append('-')
 
 output = os.fdopen(sys.stdout.fileno(), 'wb', args.buffering)
+
+
+#############################################################################
+def copy_stream(i, o, chuck_size=1024):
+    while True:
+        data = i.read(chuck_size)
+        if len(data) == 0:
+            break
+        o.write(data)
+
 
 for filename in files:
     # If a file is '-', the cat utility shall read from the standard input at
@@ -38,8 +44,8 @@ for filename in files:
     # standard input when it is referenced in this way, but shall accept
     # multiple occurrences of '-' as a file operand.
     if filename == '-':
-        pycat.copy_stream(sys.stdin.buffer, output, 1)
+        copy_stream(sys.stdin.buffer, output, 1)
         continue
 
     with open(filename, 'rb') as f:
-        pycat.copy_stream(f, output, 1)
+        copy_stream(f, output, 1)
