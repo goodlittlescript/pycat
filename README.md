@@ -33,7 +33,7 @@ Add `pycat` to your PATH (or execute it directly).
 
 ## DEVELOPMENT
 
-Clone repo, get a shell container.
+Get a shell container. All you need is docker compose.
 
 ```shell
 ./Projectfile shell
@@ -44,17 +44,7 @@ Do development in the shell.
 ```shell
 # run the utility
 ./bin/pycat <<<"success"
-```
 
-Use the Projectfile for common tasks.
-
-```shell
-# test
-./Projectfile test
-
-# lint
-./Projectfile lint
-
-# fix
-./Projectfile fix
+# run tests
+./test/suite
 ```

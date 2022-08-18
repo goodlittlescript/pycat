@@ -26,19 +26,19 @@ clean () {
 }
 
 #
-# helpers (in container only)
+# helpers
 #
 
 test () {
-  ./test/suite
+  up && docker compose exec shell ./test/suite
 }
 
 lint () {
-  yapf -r -d .
+  up && docker compose exec shell yapf -r -d .
 }
 
 fix () {
-  yapf -r -vv -i .
+  up && docker compose exec shell yapf -r -vv -i .
 }
 
 #
