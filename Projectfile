@@ -6,28 +6,32 @@
 #
 
 images () {
-  docker-compose build --parallel
+  docker compose build --parallel
 }
 
 up () {
-  docker-compose up --detach shell
+  docker compose up --detach "$@"
 }
 
 shell () {
-  up && docker-compose exec shell /bin/bash -l
+  up && docker compose exec shell /bin/bash -l
 }
 
 down () {
-  docker-compose stop
+  docker compose stop
 }
 
 clean () {
-  docker-compose rm -s -f -v
+  docker compose rm -s -f -v
 }
 
 #
 # helpers (in container only)
 #
+
+test () {
+  ./test/suite
+}
 
 lint () {
   yapf -r -d .

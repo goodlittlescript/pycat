@@ -3,9 +3,8 @@ version: '3.6'
 services:
   shell:
     build:
-      network: host
       context: .
     command: [/bin/sleep, "86400"]
     volumes:
-    - .:/app
-    - ./tmp/home:/home/appuser
+    - $PWD:/app
+    - $PWD/tmp/home:/home/appuser

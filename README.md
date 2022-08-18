@@ -33,29 +33,24 @@ Add `pycat` to your PATH (or execute it directly).
 
 ## DEVELOPMENT
 
-Clone repo, build images.
+Clone repo, get a shell container.
 
-```bash
-make images
+```shell
+./Projectfile shell
 ```
 
-Run the utility, test, fix, and lint.
+Do development in the shell. Use the Projectfile for common tasks.
 
-```bash
-make run <<<"success"
-make test fix lint
-```
+```shell
+# run the utility
+./bin/pycat <<<"success"
 
-Get a shell for development.
+# test
+./Projectfile test
 
-```bash
-make shell
-# ./bin/pycat <<<"success"
-# ./test/suite
-```
+# lint
+./Projectfile lint
 
-Package.
-
-```bash
-make artifacts
+# fix
+./Projectfile fix
 ```
