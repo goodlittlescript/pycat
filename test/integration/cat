@@ -84,7 +84,7 @@ test_v_prints_verbose () {
 unset LOG_LEVEL
 $CAT -v -v -v 2>&1 /dev/null | sed -e 's/^\[.\{24\}\]/[...]/g' | assert_output "\
 [...] INFO $CAT - filename: /dev/null
-[...] DEBUG $CAT - read: 0
+[...] DEBUG $CAT - eof
 "
 }
 
