@@ -2,6 +2,7 @@
 import argparse
 import os
 import sys
+import logging
 
 import signal
 signal.signal(signal.SIGPIPE, signal.SIG_DFL)
@@ -19,6 +20,8 @@ parser.add_argument(
     const=0,
     default=-1,
     help='unbuffer output')
+parser.add_argument(
+    '-v', dest='log_level', action='count', default=0, help='verbose output')
 
 args = parser.parse_intermixed_args()
 
@@ -28,17 +31,29 @@ if len(files) == 0:
 
 output = os.fdopen(sys.stdout.fileno(), 'wb', args.buffering)
 
+logging.basicConfig(
+    level=os.environ.get('LOG_LEVEL', logging.WARN - args.log_level * 10),
+    format='[%(asctime)s] %(levelname)s %(filename)s - %(message)s',
+    datefmt='%Y-%m-%dT%H:%M:%S%z',
+)
+logger = logging.getLogger(__file__)
+
 
 #############################################################################
 def copy_stream(i, o, chuck_size=1024):
     while True:
         data = i.read(chuck_size)
+        logger.debug(f"read: {len(data)}")
         if len(data) == 0:
             break
         o.write(data)
 
 
+#############################################################################
+
 for filename in files:
+    logger.info(f"filename: {filename}")
+
     # If a file is '-', the cat utility shall read from the standard input at
     # that point in the sequence. The cat utility shall not close and reopen
     # standard input when it is referenced in this way, but shall accept

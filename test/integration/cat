@@ -74,4 +74,23 @@ assert_status 141 "$exit_status" "expected EPIPE exit with -u"
 assert_status 0 $? "output was not unbuffered"
 }
 
+#
+# -v (not specified by posix)
+#
+
+test_v_prints_verbose () {
+unset LOG_LEVEL
+$CAT -v -v -v 2>&1 /dev/null | sed -e 's/^\[.\{24\}\]/[...]/g' | assert_output "\
+[...] INFO $CAT - filename: /dev/null
+[...] DEBUG $CAT - read: 0
+"
+}
+
+test_LOG_LEVEL_sets_verbose () {
+export LOG_LEVEL=INFO
+$CAT 2>&1 /dev/null | sed -e 's/^\[.\{24\}\]/[...]/g' | assert_output "\
+[...] INFO $CAT - filename: /dev/null
+"
+}
+
 . ts
