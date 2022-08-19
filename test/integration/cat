@@ -8,7 +8,9 @@ abc
 }
 
 test_cat_concatenates_files () {
-printf "%s\n" c | $CAT <(printf "%s\n" a b) -u - | assert_output "\
+mkdir -p "$ts_test_dir"
+printf "%s\n" a > "$ts_test_dir/file"
+printf "%s\n" c | $CAT "$ts_test_dir/file" <(printf "%s\n" b) -u - | assert_output "\
 a
 b
 c
