@@ -7,7 +7,7 @@ pycat(1) -- POSIX cat in Python 3
 
 ## DESCRIPTION
 
-The `cat` utility in python, per the [POSIX specification](http://pubs.opengroup.org/onlinepubs/000095399/utilities/cat.html). Intended to be used as a single-file, no-dependency template for writing shell scripts.
+The `cat` utility in python, per the [POSIX specification](http://pubs.opengroup.org/onlinepubs/000095399/utilities/cat.html), plus logging. Intended to be used as a single-file, no-dependency template for writing shell scripts.
 
 ## OPTIONS
 
@@ -17,7 +17,12 @@ These options control how `pycat` operates.
   Unbuffer output.
 
 * `-v`:
-  Verbose output. Can be used multiple times. The log level may also be set the LOG_LEVEL env variable with standard log level names. Logging is not a part of the posix spec but was added as it is so frequently helpful.
+  Verbose output. Can be used multiple times.
+
+## ENVIRONMENT
+
+* `LOG_LEVEL`:
+  Sets the log level using the standard log level names (ex 'INFO'). Overrides `-v`.
 
 ## EXAMPLES
 
